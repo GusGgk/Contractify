@@ -1,4 +1,4 @@
-# Licença Proprietária – ContratoExpress
+# Licença Proprietária – Contractify
 
 Copyright (c) 2025 Gustavo Giacoia.  
 Todos os direitos reservados.

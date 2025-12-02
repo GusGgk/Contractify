@@ -1,4 +1,4 @@
-# 📄 README — ContratoExpress (nome provisório)
+# 📄 README — Contractify (nome provisório)
 
 Gere contratos profissionais em minutos. Simples. Rápido. Automatizado.
 
@@ -12,9 +12,9 @@ Gere contratos profissionais em minutos. Simples. Rápido. Automatizado.
 
 ---
 
-## 🚀 ContratoExpress — Automação de contratos para qualquer pessoa
+## 🚀 Contractify — Automação de contratos para qualquer pessoa
 
-O **ContratoExpress** é uma aplicação **SaaS** que permite a geração de contratos e termos profissionais de forma automática, rápida e acessível.  
+O **Contractify** é uma aplicação **SaaS** que permite a geração de contratos e termos profissionais de forma automática, rápida e acessível.  
 O usuário escolhe um modelo, preenche dados simples e o sistema gera um **PDF pronto**, liberado após pagamento.
 
 O objetivo é atender MEIs, freelancers, autônomos e pequenos negócios que precisam de contratos rápidos e profissionais.
