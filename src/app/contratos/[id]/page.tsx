@@ -1,39 +1,71 @@
-import Link from "next/link";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { redirect, notFound } from "next/navigation";
+import Link from "next/link";
 
-export default async function Contratos() {
+export default async function ContratoPage({ params }: { params: { id: string } }) {
   const supabase = createSupabaseServerClient();
 
+  // Verifica usuário logado
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const { data: contratos } = await supabase
+  if (!user) {
+    redirect("/login");
+  }
+
+  // Busca o contrato
+  const { data: contrato } = await supabase
     .from("Contratos")
     .select("*")
-    .eq("user_id", user?.id)
-    .order("criado_em", { ascending: false });
+    .eq("id", params.id)
+    .single();
+
+  // Se não existe → 404
+  if (!contrato) {
+    notFound();
+  }
+
+  // Se o contrato não for do usuário → 404
+  if (contrato.user_id !== user.id) {
+    notFound();
+  }
 
   return (
-    <div className="p-10">
-      <h1 className="text-3xl font-bold mb-6">Meus Contratos</h1>
+    <div className="p-10 max-w-3xl mx-auto">
+      <div className="flex justify-between items-center">
+        <h1 className="text-3xl font-bold mb-6">
+          {contrato.titulo || "Sem título"}
+        </h1>
 
-      <Link
-        href="/contratos/novo"
-        className="px-4 py-2 bg-green-600 text-white rounded-md"
-      >
-        Criar Contrato
+        <div className="flex gap-4 mt-4">
+
+          <a
+            href={`/contratos/${params.id}/editar`}
+            className="px-4 py-2 bg-blue-600 text-white rounded-md"
+          >
+            Editar
+          </a>
+
+          <form action={`/api/contratos/${params.id}/delete`} method="POST">
+            <button
+              type="submit"
+              className="px-4 py-2 bg-red-600 text-white rounded-md"
+            >
+              Excluir
+            </button>
+          </form>
+
+        </div>
+      </div>
+
+      <pre className="whitespace-pre-wrap bg-gray-100 p-4 rounded-md">
+        {contrato.conteudo || "Sem conteúdo"}
+      </pre>
+
+      <Link href="/contratos" className="block mt-6 text-blue-600 underline">
+        ← Voltar para meus contratos
       </Link>
-
-      <ul className="mt-6 space-y-3">
-        {contratos?.map((c) => (
-          <li key={c.id}>
-            <Link href={`/contratos/${c.id}`} className="underline text-blue-600">
-              {c.titulo}
-            </Link>
-          </li>
-        ))}
-      </ul>
     </div>
   );
 }
