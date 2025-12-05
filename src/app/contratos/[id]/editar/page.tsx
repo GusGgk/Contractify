@@ -25,12 +25,17 @@ export default async function EditarContrato({ params }: any) {
 
       <form action={`/api/contratos/${params.id}/update`} method="POST" className="space-y-4">
 
+        <p className="text-sm text-gray-600">
+          Status atual: <strong>{contrato.status}</strong>
+        </p>
+
         <input
           type="text"
           name="titulo"
           defaultValue={contrato.titulo}
           className="w-full p-2 border rounded-md"
           required
+          disabled={contrato.status === "assinado" || contrato.status === "arquivado"}
         />
 
         <textarea
@@ -38,13 +43,16 @@ export default async function EditarContrato({ params }: any) {
           defaultValue={contrato.conteudo}
           className="w-full p-2 border rounded-md"
           rows={10}
+          disabled={contrato.status === "assinado" || contrato.status === "arquivado"}
         ></textarea>
 
-        <button className="px-4 py-2 bg-blue-600 text-white rounded-md">
-          Salvar Alterações
-        </button>
-
+        {contrato.status !== "assinado" && contrato.status !== "arquivado" && (
+          <button className="px-4 py-2 bg-blue-600 text-white rounded-md">
+            Salvar Alterações
+          </button>
+        )}
       </form>
+
     </div>
   );
 }

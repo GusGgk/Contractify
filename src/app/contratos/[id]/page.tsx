@@ -1,5 +1,6 @@
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { redirect, notFound } from "next/navigation";
+import "../contratos.css";
 import Link from "next/link";
 
 export default async function ContratoPage({ params }: { params: { id: string } }) {

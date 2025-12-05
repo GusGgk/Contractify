@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import ContratoForm from "@/components/ContratoForm";
+import "../contratos.css";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 export default async function NovoContrato() {

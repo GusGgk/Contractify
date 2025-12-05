@@ -13,12 +13,17 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Não autenticado" }, { status: 401 });
   }
 
+  // Regras automáticas do Status
+  const status =
+    !titulo || titulo.trim() === "" ? "rascunho" : "ativo";
+
   const { data, error } = await supabase
     .from("Contratos")
     .insert({
       user_id: user.id,
       titulo,
       conteudo,
+      status,
     })
     .select()
     .single();
