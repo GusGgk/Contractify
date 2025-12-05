@@ -49,7 +49,12 @@ export default async function Contratos({ searchParams }: any) {
 
   return (
     <div className="p-10 max-w-4xl mx-auto">
-
+      <Link
+        href="/dashboard"
+        className="text-blue-600 hover:underline mb-4 inline-block"
+      >
+        &larr; Voltar ao Dashboard
+      </Link>
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold">Meus Contratos</h1>
 
