@@ -11,26 +11,17 @@ export default async function ContratoPage({ params }: { params: { id: string } 
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (!user) {
-    redirect("/login");
-  }
+  if (!user) redirect("/login");
 
-  // Busca o contrato
+  // Busca contrato
   const { data: contrato } = await supabase
     .from("Contratos")
     .select("*")
     .eq("id", params.id)
     .single();
 
-  // Se não existe → 404
-  if (!contrato) {
-    notFound();
-  }
-
-  // Se o contrato não for do usuário → 404
-  if (contrato.user_id !== user.id) {
-    notFound();
-  }
+  if (!contrato) notFound();
+  if (contrato.user_id !== user.id) notFound();
 
   return (
     <div className="p-10 max-w-3xl mx-auto">
@@ -60,7 +51,32 @@ export default async function ContratoPage({ params }: { params: { id: string } 
         </div>
       </div>
 
-      <pre className="whitespace-pre-wrap bg-gray-100 p-4 rounded-md">
+      {/* 📄 NOVO: Botões de PDF */}
+      <div className="flex gap-4 mt-4">
+
+        {/* Gerar PDF na hora */}
+        <a
+          href={`/api/contratos/${params.id}/pdf`}
+          target="_blank"
+          className="px-4 py-2 bg-green-600 text-white rounded-md"
+        >
+          Gerar PDF
+        </a>
+
+        {/* Baixar PDF salvo (se existir) */}
+        {contrato.arquivo_url && (
+          <a
+            href={contrato.arquivo_url}
+            target="_blank"
+            className="px-4 py-2 bg-purple-600 text-white rounded-md"
+          >
+            Baixar PDF Salvo
+          </a>
+        )}
+
+      </div>
+
+      <pre className="whitespace-pre-wrap bg-gray-100 p-4 rounded-md mt-6">
         {contrato.conteudo || "Sem conteúdo"}
       </pre>
 

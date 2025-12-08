@@ -77,6 +77,12 @@ export default async function Dashboard() {
           Ver todos os contratos
         </Link>
       </div>
+      <a
+        href="/perfil"
+        className="mt-10 inline-block px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700"
+      >
+        Acessar seu perfil
+      </a>
 
       <a
         href="/logout"
